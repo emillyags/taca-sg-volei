@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Taça SG Vôlei 2026</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="config.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <img src="logo-sg-volei.png" class="logo" alt="SG Vôlei">
+    <div class="brand">TAÇA SG VÔLEI <small>Resultados em tempo real</small></div>
+    <nav><a href="#jogos">Jogos</a><a href="#classificacao">Classificação</a><a href="admin.html">Admin</a></nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="pill">🏐 VÔLEI DE AREIA</span>
+    <h1>Taça SG Vôlei</h1>
+    <p>03 de outubro de 2026 • Aloha Beach • São Gotardo/MG</p>
+    <div>
+      <span class="pill">4ª Edição Feminina</span>
+      <span class="pill">1ª Edição Masculina</span>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+  <div class="tabs" id="tabs"></div>
+  <section id="jogos" class="card">
+    <div class="section-title"><h2>Jogos</h2><span id="syncStatus" class="muted">Conectando...</span></div>
+    <div id="matches"></div>
+  </section>
+
+  <section id="classificacao" class="card">
+    <div class="section-title"><h2>Classificação</h2><span class="muted">Atualizada automaticamente</span></div>
+    <div id="standings" class="standing-grid"></div><p class="muted standings-note">Critério de desempate: saldo de pontos. Persistindo o empate, será necessário jogo de desempate.</p>
+  </section>
+
+  <section class="card">
+    <div class="section-title"><h2>Patrocinadores</h2></div>
+    <div id="sponsors" class="sponsors"><span class="muted">Em breve</span></div>
+  </section>
+</main>
+
+<footer>Associação São Gotardo Vôlei Clube • Taça SG Vôlei 2026</footer>
+</body>
+</html>

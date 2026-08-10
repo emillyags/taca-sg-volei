@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin • Taça SG Vôlei</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="config.js"></script>
+  <script defer src="admin.js"></script>
+</head>
+<body class="admin-page">
+<header><div class="nav"><img src="logo-sg-volei.png" class="logo" alt="SG Vôlei"><div class="brand">ADMINISTRAÇÃO <small>Taça SG Vôlei</small></div><nav><a href="index.html">Ver site público</a></nav></div></header>
+<main class="container">
+  <section id="loginBox" class="card login-card">
+    <h2>🔐 Acesso do administrador</h2><p class="muted">Entre com o e-mail e a senha cadastrados no Supabase.</p>
+    <label>E-mail</label><input id="email" type="email" placeholder="admin@sgvolei.com"><label>Senha</label><input id="password" type="password">
+    <button id="loginBtn" class="btn">Entrar</button><p id="loginMessage" class="danger"></p>
+  </section>
+
+  <div id="panel" hidden>
+    <section class="card rules-card">
+      <div class="section-title"><h2>🏐 Controle do campeonato</h2><span class="muted">2 chaves • 4 equipes por chave</span></div>
+      <div class="admin-toolbar">
+        <div><label>Categoria para ações automáticas</label><select id="autoCategory"><option value="fem">Feminino</option><option value="masc">Masculino</option></select></div>
+        <button id="generateGroupsBtn" class="btn">Gerar jogos das chaves</button>
+        <button id="generateSemisBtn" class="btn secondary">Gerar semifinais</button>
+        <button id="generateFinalBtn" class="btn secondary">Gerar final</button>
+      </div>
+      <p id="automationMessage" class="muted"></p>
+      <div id="adminStandings"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-title"><h2>👥 Equipes e chaves</h2><span class="muted">Defina A ou B para as equipes já cadastradas</span></div>
+      <div id="teamManager"></div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h3>➕ Cadastrar equipe</h3>
+        <label>Nome</label><input id="teamName">
+        <label>Categoria</label><select id="teamCategory"><option value="fem">Feminino</option><option value="masc">Masculino</option></select>
+        <label>Chave</label><select id="teamGroup"><option value="A">Chave A</option><option value="B">Chave B</option></select>
+        <button id="addTeamBtn" class="btn">Cadastrar equipe</button>
+      </section>
+
+      <section class="card">
+        <h3>➕ Cadastrar jogo manualmente</h3>
+        <label>Categoria</label><select id="matchCategory"><option value="fem">Feminino</option><option value="masc">Masculino</option></select>
+        <label>Fase</label><select id="matchPhase"><option>Grupo</option><option>Desempate</option><option>Semifinal</option><option>Final</option></select>
+        <label>Horário</label><input id="matchTime" type="time"><label>Quadra</label><input id="matchCourt" placeholder="Quadra 1">
+        <label>Equipe A</label><select id="teamA"></select><label>Equipe B</label><select id="teamB"></select>
+        <button id="addMatchBtn" class="btn">Cadastrar jogo</button>
+      </section>
+    </div>
+
+    <section class="card">
+      <div class="section-title"><h2>🎯 Lançar resultados</h2><button id="logoutBtn" class="btn secondary">Sair</button></div>
+      <p class="muted">Informe os pontos de cada set. Ao finalizar, o sistema valida 21/21/15, diferença de 2, calcula o placar em sets e atualiza a classificação.</p>
+      <div id="adminMatches"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-title"><h2>🤝 Patrocinadores</h2><span class="muted">As logos aparecem automaticamente no site público</span></div>
+      <div class="sponsor-admin-grid"><div>
+        <label>Nome do patrocinador</label><input id="sponsorName" placeholder="Ex.: Supermercado São Vicente">
+        <label>Logo</label><input id="sponsorLogo" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+        <label>Ordem de exibição</label><input id="sponsorPosition" type="number" min="0" value="0" placeholder="0">
+        <p class="muted upload-hint">PNG, JPG, WEBP ou SVG. Prefira imagens com fundo transparente.</p>
+        <button id="addSponsorBtn" class="btn">Cadastrar patrocinador</button><p id="sponsorMessage" class="muted"></p>
+      </div><div><h3 class="admin-subtitle">Patrocinadores cadastrados</h3><div id="adminSponsors"></div></div></div>
+    </section>
+  </div>
+</main>
+</body></html>
