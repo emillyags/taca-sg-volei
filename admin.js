@@ -861,7 +861,7 @@ async function addSponsor(){
 
   const {error:uploadError}=await sb
     .storage
-    .from("sponsor-logos")
+    .from("patrocinadores")
     .upload(
       path,
       file,
@@ -881,7 +881,7 @@ async function addSponsor(){
 
   const {data:publicData}=sb
     .storage
-    .from("sponsor-logos")
+    .from("patrocinadores")
     .getPublicUrl(path);
 
   const {error}=await sb
@@ -896,7 +896,7 @@ async function addSponsor(){
   if(error){
     await sb
       .storage
-      .from("sponsor-logos")
+      .from("patrocinadores")
       .remove([path]);
 
     $("addSponsorBtn").disabled=false;
@@ -964,7 +964,7 @@ async function deleteSponsor(id){
   if(data?.logo_path){
     await sb
       .storage
-      .from("sponsor-logos")
+      .from("patrocinadores")
       .remove([data.logo_path]);
   }
 
