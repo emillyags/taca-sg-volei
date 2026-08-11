@@ -99,25 +99,47 @@ function renderTeamManager(){
     return `
       <div class="team-manage-block">
         <h3>${label}</h3>
+
         ${
           list.length
             ? list.map(t=>`
               <div class="team-manage-row">
-                <b>${esc(t.name)}</b>
+
+                <input
+                  type="text"
+                  id="name-${t.id}"
+                  value="${esc(t.name)}"
+                  placeholder="Nome da equipe">
 
                 <select id="group-${t.id}">
-                  <option value="" ${!t.group_code?'selected':''}>Sem chave</option>
-                  <option value="A" ${t.group_code==='A'?'selected':''}>Chave A</option>
-                  <option value="B" ${t.group_code==='B'?'selected':''}>Chave B</option>
+                  <option value="" ${!t.group_code?'selected':''}>
+                    Sem chave
+                  </option>
+
+                  <option value="A" ${t.group_code==='A'?'selected':''}>
+                    Chave A
+                  </option>
+
+                  <option value="B" ${t.group_code==='B'?'selected':''}>
+                    Chave B
+                  </option>
                 </select>
 
                 <button
                   class="btn compact secondary"
-                  onclick="updateTeamGroup('${t.id}')">
-                  Salvar
+                  onclick="editTeam('${t.id}')">
+                  Salvar alterações
                 </button>
+
+                <button
+                  class="btn compact red"
+                  onclick="deleteTeam('${t.id}')">
+                  Excluir
+                </button>
+
               </div>
             `).join('')
+
             : `<p class="muted">Nenhuma equipe cadastrada.</p>`
         }
       </div>
@@ -127,6 +149,83 @@ function renderTeamManager(){
   $("teamManager").innerHTML=
     `<div class="standing-grid">${byCat}</div>`;
 }
+
+
+async function editTeam(id){
+  const team=teams.find(t=>t.id===id);
+  if(!team)return;
+
+  const name=$(`name-${id}`).value.trim();
+  const group_code=$(`group-${id}`).value||null;
+
+  if(!name){
+    return alert("Informe o nome da equipe.");
+  }
+
+  if(group_code){
+    const count=teams.filter(
+      t=>t.category===team.category &&
+         t.group_code===group_code &&
+         t.id!==id
+    ).length;
+
+    if(count>=4){
+      return alert(`A Chave ${group_code} já possui 4 equipes.`);
+    }
+  }
+
+  const {error}=await sb
+    .from("teams")
+    .update({
+      name,
+      group_code
+    })
+    .eq("id",id);
+
+  if(error){
+    return alert(error.message);
+  }
+
+  alert("Equipe alterada com sucesso!");
+  await load();
+}
+
+
+async function deleteTeam(id){
+  const team=teams.find(t=>t.id===id);
+  if(!team)return;
+
+  const confirmar=confirm(
+    `Deseja realmente excluir a equipe "${team.name}"?\n\nOs jogos cadastrados envolvendo essa equipe também serão excluídos.`
+  );
+
+  if(!confirmar)return;
+
+  const {error:matchesError}=await sb
+    .from("matches")
+    .delete()
+    .or(`team_a.eq.${id},team_b.eq.${id}`);
+
+  if(matchesError){
+    return alert(matchesError.message);
+  }
+
+  const {error}=await sb
+    .from("teams")
+    .delete()
+    .eq("id",id);
+
+  if(error){
+    return alert(error.message);
+  }
+
+  alert("Equipe excluída com sucesso!");
+  await load();
+}
+
+
+window.editTeam=editTeam;
+window.deleteTeam=deleteTeam;
 
 async function updateTeamGroup(id){
   const team=teams.find(t=>t.id===id);
