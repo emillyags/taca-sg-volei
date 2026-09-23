@@ -29,13 +29,29 @@ function init(){
     }
   );
 sb.auth.onAuthStateChange(async (event, session) => {
-  if (event === "PASSWORD_RECOVERY") {
+  if (event === "PASSWORD_RECOVERY" && session) {
     $("loginBox").hidden = true;
     $("panel").hidden = true;
     $("resetBox").hidden = false;
   }
 });
 
+const hashParams = new URLSearchParams(window.location.hash.substring(1));
+const accessToken = hashParams.get("access_token");
+const refreshToken = hashParams.get("refresh_token");
+
+if (accessToken && refreshToken) {
+  const { error } = await sb.auth.setSession({
+    access_token: accessToken,
+    refresh_token: refreshToken
+  });
+
+  if (!error) {
+    $("loginBox").hidden = true;
+    $("panel").hidden = true;
+    $("resetBox").hidden = false;
+  }
+}
 $("updatePasswordBtn")?.addEventListener("click", async () => {
   const password = $("newPassword").value;
   const confirmPassword = $("confirmPassword").value;
