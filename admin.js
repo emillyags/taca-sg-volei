@@ -36,20 +36,18 @@ sb.auth.onAuthStateChange(async (event, session) => {
   }
 });
 
-const hashParams = new URLSearchParams(window.location.hash.substring(1));
-const accessToken = hashParams.get("access_token");
-const refreshToken = hashParams.get("refresh_token");
+const urlParams = new URLSearchParams(window.location.search);
+const code = urlParams.get("code");
 
-if (accessToken && refreshToken) {
-  const { error } = await sb.auth.setSession({
-    access_token: accessToken,
-    refresh_token: refreshToken
-  });
+if (code) {
+  const { error } = await sb.auth.exchangeCodeForSession(code);
 
   if (!error) {
     $("loginBox").hidden = true;
     $("panel").hidden = true;
     $("resetBox").hidden = false;
+  } else {
+    $("resetMessage").textContent = "O link de recuperação expirou ou é inválido.";
   }
 }
 $("updatePasswordBtn")?.addEventListener("click", async () => {
