@@ -28,7 +28,46 @@ function init(){
       }
     }
   );
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (event === "PASSWORD_RECOVERY") {
+    $("loginBox").hidden = true;
+    $("panel").hidden = true;
+    $("resetBox").hidden = false;
+  }
+});
 
+$("updatePasswordBtn")?.addEventListener("click", async () => {
+  const password = $("newPassword").value;
+  const confirmPassword = $("confirmPassword").value;
+
+  if (password.length < 6) {
+    $("resetMessage").textContent = "A senha precisa ter pelo menos 6 caracteres.";
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    $("resetMessage").textContent = "As senhas não coincidem.";
+    return;
+  }
+
+  $("resetMessage").textContent = "Salvando nova senha...";
+
+  const { error } = await sb.auth.updateUser({
+    password: password
+  });
+
+  if (error) {
+    $("resetMessage").textContent = "Erro: " + error.message;
+    return;
+  }
+
+  $("resetMessage").textContent = "Senha alterada com sucesso!";
+  await sb.auth.signOut();
+
+  setTimeout(() => {
+    window.location.href = "admin.html";
+  }, 1500);
+});
   return true;
 }
 
