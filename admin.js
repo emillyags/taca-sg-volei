@@ -381,19 +381,153 @@ function renderMatches(list){
           </select>
         </div>
 
+        
         <div class="save">
-          <button
-            class="btn green"
-            onclick="saveResult('${m.id}')">
-            Salvar resultado
-          </button>
-        </div>
+  <button
+    class="btn green"
+    onclick="saveResult('${m.id}')">
+    Salvar resultado
+  </button>
+
+  <button
+    class="btn"
+    onclick="editMatch('${m.id}')">
+    ✏️ Editar jogo
+  </button>
+
+  <button
+    class="btn"
+    onclick="deleteMatch('${m.id}')">
+    🗑️ Excluir jogo
+  </button>
+</div>
 
       </div>
     `).join("")
     ||
     "<p class='muted'>Nenhum jogo cadastrado.</p>";
 }
+async function deleteMatch(id){
+  const jogo = matches.find(m => String(m.id) === String(id));
+
+  const confirmar = confirm(
+    "Tem certeza que deseja excluir este jogo? Essa ação não poderá ser desfeita."
+  );
+
+  if(!confirmar) return;
+
+  const { error } = await sb
+    .from("matches")
+    .delete()
+    .eq("id", id);
+
+  if(error){
+    alert("Não foi possível excluir o jogo: " + error.message);
+    return;
+  }
+
+  alert("Jogo excluído com sucesso!");
+  await load();
+}
+
+window.deleteMatch = deleteMatch;
+async function editMatch(id){
+  const jogo = matches.find(m => String(m.id) === String(id));
+
+  if(!jogo){
+    alert("Jogo não encontrado.");
+    return;
+  }
+
+  const map = Object.fromEntries(
+    teams.map(t => [String(t.id), t.name])
+  );
+
+  const equipeA = prompt(
+    "Equipe A:\nDigite exatamente o nome da equipe.",
+    map[String(jogo.team_a)] || ""
+  );
+
+  if(equipeA === null) return;
+
+  const equipeB = prompt(
+    "Equipe B:\nDigite exatamente o nome da equipe.",
+    map[String(jogo.team_b)] || ""
+  );
+
+  if(equipeB === null) return;
+
+  const timeA = teams.find(
+    t => t.name.toLowerCase().trim() === equipeA.toLowerCase().trim()
+  );
+
+  const timeB = teams.find(
+    t => t.name.toLowerCase().trim() === equipeB.toLowerCase().trim()
+  );
+
+  if(!timeA || !timeB){
+    alert("Uma das equipes informadas não foi encontrada.");
+    return;
+  }
+
+  if(String(timeA.id) === String(timeB.id)){
+    alert("Escolha equipes diferentes.");
+    return;
+  }
+
+  const horario = prompt(
+    "Horário do jogo:",
+    jogo.match_time ? jogo.match_time.slice(0,5) : ""
+  );
+
+  if(horario === null) return;
+
+  const quadra = prompt(
+    "Quadra:",
+    jogo.court || ""
+  );
+
+  if(quadra === null) return;
+
+  const fase = prompt(
+    "Fase do jogo:",
+    jogo.phase || "Grupo"
+  );
+
+  if(fase === null) return;
+
+  const confirmar = confirm(
+    "Deseja salvar as alterações deste jogo?"
+  );
+
+  if(!confirmar) return;
+
+  const { error } = await sb
+    .from("matches")
+    .update({
+      team_a: timeA.id,
+      team_b: timeB.id,
+      match_time: horario || null,
+      court: quadra,
+      phase: fase
+    })
+    .eq("id", id);
+
+  if(error){
+    alert("Não foi possível editar o jogo: " + error.message);
+    return;
+  }
+
+  alert("Jogo atualizado com sucesso!");
+  await load();
+}
+
+window.editMatch = editMatch;
+
+
+
+
+
 
 function setWinner(a,b,target){
   if(a===0 && b===0)return 0;
