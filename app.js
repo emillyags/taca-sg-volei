@@ -1,5 +1,17 @@
 let activeCategory="fem",sb;
-function initSupabase(){if(!window.SUPABASE_URL||window.SUPABASE_URL.includes("COLE_AQUI")){document.getElementById("syncStatus").textContent="Configuração do banco pendente";return false;}sb=supabase.createClient(window.SUPABASE_URL,window.SUPABASE_ANON_KEY);return true;}
+function initSupabase(){if(!window.SUPABASE_URL||window.SUPABASE_URL.includes("COLE_AQUI")){document.getElementById("syncStatus").textContent="Configuração do banco pendente";return false;}lsb=supabase.createClient(
+  window.SUPABASE_URL,
+  window.SUPABASE_ANON_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true
+    }
+  }
+);
+return true;
+}
 function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
 async function loadAll(){if(!sb)return;const [{data:teams},{data:matches},{data:sponsors,error:sponsorsError}]=await Promise.all([sb.from("teams").select("*").order("name"),sb.from("matches").select("*").order("match_time"),sb.from("sponsors").select("*").order("position").order("name")]);render(teams||[],matches||[]);renderSponsors(sponsorsError?[]:(sponsors||[]));document.getElementById("syncStatus").textContent="Atualizado agora";}
 function matchPointTotals(m){return {a:(m.set1_a||0)+(m.set2_a||0)+(m.set3_a||0),b:(m.set1_b||0)+(m.set2_b||0)+(m.set3_b||0)}}
