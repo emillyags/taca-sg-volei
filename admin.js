@@ -662,6 +662,7 @@ function matchPointTotals(m){
 }
 
 function buildStandings(cat,group){
+  alert("Categoria recebida: " + cat + " | Chave: " + group);
   let rows=teams
     .filter(t=>t.category===cat && t.group_code===group)
     .map(t=>({
