@@ -33,8 +33,9 @@ header{background:linear-gradient(135deg,var(--blue),#061949);color:#fff;positio
 @media(max-width:900px){.admin-toolbar{grid-template-columns:1fr 1fr}.result-editor-v2{grid-template-columns:1fr}.standing-grid{grid-template-columns:1fr}.set-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:520px){.admin-toolbar{grid-template-columns:1fr}.set-grid{grid-template-columns:repeat(2,1fr)}}
 .team-manage-block{border:1px solid var(--border);border-radius:14px;padding:12px}.team-manage-block h3{margin:0 0 8px;color:var(--blue)}.team-manage-row{display:grid;grid-template-columns:1fr 140px auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid #eef1f6}.team-manage-row:last-child{border-bottom:0}.team-manage-row select{margin:0}.team-manage-row .btn{white-space:nowrap}
-@media(max-width:600px){.team-manage-row{grid-template-columns:1fr 1fr}.team-manage-row b{grid-column:1/-1}.team-manage-row .btn{width:100%}}
+@media(max-width:600px){.team-manage-row{grid-template-columns:1fr 1fr}.team-manage-row b{grid-column:1/-1}.team-manage-row .btn{width:/* ===== FASE DE GRUPOS - VISUAL MOBILE ===== */
 /* ===== FASE DE GRUPOS - VISUAL MOBILE ===== */
+   /* ===== FASE DE GRUPOS - VISUAL MOBILE ===== */
 
 .match-phase > h3{
   margin:4px 0 18px;
@@ -43,6 +44,7 @@ header{background:linear-gradient(135deg,var(--blue),#061949);color:#fff;positio
   font-weight:900;
 }
 
+/* Chaves A e B lado a lado */
 .match-phase > div[style*="display:grid"]{
   gap:12px !important;
 }
@@ -62,39 +64,42 @@ header{background:linear-gradient(135deg,var(--blue),#061949);color:#fff;positio
   font-weight:900;
 }
 
-/* Cada partida vira um card */
+/* Card de cada jogo */
 .match-phase > div[style*="display:grid"] .match{
   display:grid;
-  grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr);
+  grid-template-columns:minmax(0,1fr) 58px minmax(0,1fr);
+  grid-template-rows:auto 1fr auto;
   position:relative !important;
-  min-height:125px;
+  min-height:140px;
   margin-bottom:10px;
-  padding:48px 8px 12px !important;
-  gap:4px;
+  padding:42px 7px 12px !important;
+  gap:5px;
   align-items:center;
   border:1px solid var(--border);
   border-radius:12px;
   background:#fff;
 }
 
-/* Horário + quadra */
+/* Horário, quadra e chave */
 .match-phase > div[style*="display:grid"] .match > .meta{
-  top:11px !important;
-  left:10px !important;
-  width:calc(100% - 20px) !important;
-  margin:0;
+  position:absolute !important;
+  top:10px !important;
+  left:9px !important;
+  width:calc(100% - 18px) !important;
+  margin:0 !important;
   text-align:left !important;
-  font-size:11px;
+  font-size:10px;
+  line-height:1.2;
   white-space:nowrap;
   color:var(--muted);
 }
 
-/* Equipes */
+/* Nomes das equipes */
 .match-phase > div[style*="display:grid"] .team{
   min-width:0;
   text-align:center;
-  font-size:13px;
-  line-height:1.15;
+  font-size:12px;
+  line-height:1.08;
   font-weight:900;
   overflow-wrap:anywhere;
 }
@@ -103,29 +108,47 @@ header{background:linear-gradient(135deg,var(--blue),#061949);color:#fff;positio
   text-align:center;
 }
 
-/* X / placar central */
+/* Área central */
 .match-phase > div[style*="display:grid"] .score{
   min-width:0;
   text-align:center;
-  font-size:21px;
+  font-size:20px;
   line-height:1;
+  font-weight:900;
+  color:var(--blue);
 }
 
-/* Status Agendado / Finalizado */
-.match-phase > div[style*="display:grid"] .score .meta{
-  display:inline-block;
-  margin-top:8px;
-  padding:4px 7px;
+/* Agendado / Finalizado */
+.match-phase > div[style*="display:grid"] .score > .meta{
+  display:block;
+  width:max-content;
+  max-width:100%;
+  margin:7px auto 0;
+  padding:4px 6px;
   border-radius:99px;
   background:#eef3fb;
   color:#50698f;
-  font-size:9px;
+  font-size:8px;
   line-height:1;
   font-weight:800;
   white-space:nowrap;
 }
 
-/* Ajustes específicos para celular */
+.match-phase > div[style*="display:grid"] .score .done{
+  color:var(--green);
+}
+
+/* Placar dos sets */
+.match-phase > div[style*="display:grid"] .set-detail{
+  margin-top:7px;
+  font-size:9px;
+  line-height:1.25;
+  color:var(--muted);
+  font-weight:700;
+  white-space:normal;
+}
+
+/* Ajustes para celular */
 @media(max-width:600px){
 
   .container{
@@ -147,14 +170,14 @@ header{background:linear-gradient(135deg,var(--blue),#061949);color:#fff;positio
   }
 
   .match-phase > div[style*="display:grid"] .match{
-    grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);
-    min-height:118px;
-    padding:44px 5px 10px !important;
+    grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);
+    min-height:132px;
+    padding:40px 5px 10px !important;
     gap:2px;
   }
 
   .match-phase > div[style*="display:grid"] .team{
-    font-size:12px;
+        font-size:12px;
   }
 
   .match-phase > div[style*="display:grid"] .score{
@@ -172,3 +195,4 @@ header{background:linear-gradient(135deg,var(--blue),#061949);color:#fff;positio
     padding:4px 5px;
   }
 }
+                                                                                                                                 
