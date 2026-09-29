@@ -34,3 +34,141 @@ header{background:linear-gradient(135deg,var(--blue),#061949);color:#fff;positio
 @media(max-width:520px){.admin-toolbar{grid-template-columns:1fr}.set-grid{grid-template-columns:repeat(2,1fr)}}
 .team-manage-block{border:1px solid var(--border);border-radius:14px;padding:12px}.team-manage-block h3{margin:0 0 8px;color:var(--blue)}.team-manage-row{display:grid;grid-template-columns:1fr 140px auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid #eef1f6}.team-manage-row:last-child{border-bottom:0}.team-manage-row select{margin:0}.team-manage-row .btn{white-space:nowrap}
 @media(max-width:600px){.team-manage-row{grid-template-columns:1fr 1fr}.team-manage-row b{grid-column:1/-1}.team-manage-row .btn{width:100%}}
+/* ===== FASE DE GRUPOS - VISUAL MOBILE ===== */
+
+.match-phase > h3{
+  margin:4px 0 18px;
+  color:var(--blue);
+  font-size:22px;
+  font-weight:900;
+}
+
+.match-phase > div[style*="display:grid"]{
+  gap:12px !important;
+}
+
+.match-phase > div[style*="display:grid"] > div{
+  min-width:0;
+}
+
+.match-phase > div[style*="display:grid"] > div > h3{
+  margin:0 0 10px;
+  padding:9px 4px;
+  text-align:center;
+  color:var(--blue);
+  background:#f3f6fc;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:900;
+}
+
+/* Cada partida vira um card */
+.match-phase > div[style*="display:grid"] .match{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr);
+  position:relative !important;
+  min-height:125px;
+  margin-bottom:10px;
+  padding:48px 8px 12px !important;
+  gap:4px;
+  align-items:center;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#fff;
+}
+
+/* Horário + quadra */
+.match-phase > div[style*="display:grid"] .match > .meta{
+  top:11px !important;
+  left:10px !important;
+  width:calc(100% - 20px) !important;
+  margin:0;
+  text-align:left !important;
+  font-size:11px;
+  white-space:nowrap;
+  color:var(--muted);
+}
+
+/* Equipes */
+.match-phase > div[style*="display:grid"] .team{
+  min-width:0;
+  text-align:center;
+  font-size:13px;
+  line-height:1.15;
+  font-weight:900;
+  overflow-wrap:anywhere;
+}
+
+.match-phase > div[style*="display:grid"] .team.right{
+  text-align:center;
+}
+
+/* X / placar central */
+.match-phase > div[style*="display:grid"] .score{
+  min-width:0;
+  text-align:center;
+  font-size:21px;
+  line-height:1;
+}
+
+/* Status Agendado / Finalizado */
+.match-phase > div[style*="display:grid"] .score .meta{
+  display:inline-block;
+  margin-top:8px;
+  padding:4px 7px;
+  border-radius:99px;
+  background:#eef3fb;
+  color:#50698f;
+  font-size:9px;
+  line-height:1;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+/* Ajustes específicos para celular */
+@media(max-width:600px){
+
+  .container{
+    padding-left:10px;
+    padding-right:10px;
+  }
+
+  .card{
+    padding:12px;
+  }
+
+  .match-phase > div[style*="display:grid"]{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+    gap:8px !important;
+  }
+
+  .match-phase > div[style*="display:grid"] > div > h3{
+    font-size:15px;
+  }
+
+  .match-phase > div[style*="display:grid"] .match{
+    grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);
+    min-height:118px;
+    padding:44px 5px 10px !important;
+    gap:2px;
+  }
+
+  .match-phase > div[style*="display:grid"] .team{
+    font-size:12px;
+  }
+
+  .match-phase > div[style*="display:grid"] .score{
+    font-size:19px;
+  }
+
+  .match-phase > div[style*="display:grid"] .match > .meta{
+    left:7px !important;
+    width:calc(100% - 14px) !important;
+    font-size:10px;
+  }
+
+  .match-phase > div[style*="display:grid"] .score .meta{
+    font-size:8px;
+    padding:4px 5px;
+  }
+}
