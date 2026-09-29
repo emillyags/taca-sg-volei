@@ -1254,9 +1254,11 @@ document.addEventListener(
     $("matchCategory").onchange=
       refreshTeamOptions;
 
-    $("autoCategory").addEventListener("change", function(){
+   $("autoCategory").onchange = function(){
+  const categoria = this.value;
+  $("autoCategory").value = categoria;
   renderAdminStandings();
-});
+};
 
     $("logoutBtn").onclick=async()=>{
       await sb.auth.signOut();
