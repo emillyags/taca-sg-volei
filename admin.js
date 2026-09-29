@@ -340,9 +340,25 @@ function renderMatches(list){
   const map=Object.fromEntries(
     teams.map(t=>[t.id,t.name])
   );
+const categoriaDoJogo=m=>{
+  const time=teams.find(t=>t.id===m.team_a);
+  return time?.category||"";
+};
 
+const listaOrdenada=[
+  ...list.filter(m=>categoriaDoJogo(m)==="fem"),
+  ...list.filter(m=>categoriaDoJogo(m)==="masc")
+];
+
+let categoriaAnterior="";
   $("adminMatches").innerHTML=
-    list.map(m=>`
+    listaOrdenada.map(m=>{
+  const categoria=categoriaDoJogo(m);
+  const titulo=categoria!==categoriaAnterior
+    ? `<h2 style="margin:28px 0 14px;font-size:22px;">${categoria==="fem"?"🏐 FEMININO":"🏐 MASCULINO"}</h2>`
+    : "";
+  categoriaAnterior=categoria;
+  return titulo+`
       <div class="result-editor result-editor-v2">
 
         <div class="match-editor-head">
@@ -403,7 +419,8 @@ function renderMatches(list){
 </div>
 
       </div>
-    `).join("")
+    `;
+}).join("")
     ||
     "<p class='muted'>Nenhum jogo cadastrado.</p>";
 }
