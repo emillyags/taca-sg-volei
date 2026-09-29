@@ -1254,8 +1254,9 @@ document.addEventListener(
     $("matchCategory").onchange=
       refreshTeamOptions;
 
-    $("autoCategory").onchange=
-      renderAdminStandings;
+    $("autoCategory").onchange=()=>{
+    renderAdminStandings();
+};
 
     $("logoutBtn").onclick=async()=>{
       await sb.auth.signOut();
