@@ -70,7 +70,7 @@ async function load(){
     console.error(te||me);
     $("automationMessage").className="danger";
     $("automationMessage").textContent=
-      "Banco ainda sem a migração das regras. Execute MIGRACAO_REGRAS_CAMPEONATO.sql no Supabase.";
+      "ERRO REAL: " + (te?.message || me?.message || "erro desconhecido");
   }
 
   teams=t||[];
