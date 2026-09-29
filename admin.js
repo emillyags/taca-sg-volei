@@ -1034,19 +1034,19 @@ async function generateFinal(){
   ){
     msg.className="danger";
     msg.textContent=
-      "Finalize as duas semifinais antes de gerar a final.";
+      "Finalize as duas semifinais antes de gerar a final e a disputa de 3º lugar.";
     return;
   }
 
   if(
     matches.some(
       m=>m.category===cat &&
-         m.phase==="Final"
+         (m.phase==="Final" || m.phase==="Terceiro Lugar")
     )
   ){
     msg.className="success";
     msg.textContent=
-      "A final desta categoria já está cadastrada.";
+      "A final e/ou a disputa de 3º lugar desta categoria já estão cadastradas.";
     return;
   }
 
@@ -1056,26 +1056,43 @@ async function generateFinal(){
       : m.team_b
   );
 
-  const {error}=await sb
-    .from("matches")
-    .insert({
+  const losers=semis.map(
+    m=>m.sets_a>m.sets_b
+      ? m.team_b
+      : m.team_a
+  );
+
+  const inserts=[
+    {
+      category:cat,
+      phase:"Terceiro Lugar",
+      team_a:losers[0],
+      team_b:losers[1],
+      court:"Quadra 1",
+      status:"Agendado"
+    },
+    {
       category:cat,
       phase:"Final",
       team_a:winners[0],
       team_b:winners[1],
       court:"Quadra 1",
       status:"Agendado"
-    });
+    }
+  ];
+
+  const {error}=await sb
+    .from("matches")
+    .insert(inserts);
 
   if(error)return alert(error.message);
 
   msg.className="success";
   msg.textContent=
-    "Final gerada automaticamente com as vencedoras das semifinais.";
+    "Disputa de 3º lugar e final geradas automaticamente.";
 
   await load();
 }
-
 function safeFileName(name){
   return name
     .normalize("NFD")
