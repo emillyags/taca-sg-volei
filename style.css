@@ -160,39 +160,104 @@ header{background:linear-gradient(135deg,var(--blue),#061949);color:#fff;positio
     padding:12px;
   }
 
+  /* Chave A e Chave B lado a lado */
   .match-phase > div[style*="display:grid"]{
     grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
-    gap:8px !important;
+    gap:10px !important;
   }
 
+  /* Título das chaves */
   .match-phase > div[style*="display:grid"] > div > h3{
     font-size:15px;
+    text-align:center;
+    margin-bottom:10px;
   }
 
+  /* QUADRINHO DE CADA PARTIDA */
   .match-phase > div[style*="display:grid"] .match{
-    grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);
-    min-height:132px;
-    padding:40px 5px 10px !important;
-    gap:2px;
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) 46px minmax(0,1fr) !important;
+    grid-template-rows:auto 1fr !important;
+    position:relative !important;
+
+    width:100%;
+    min-height:145px;
+    margin:0 0 10px 0 !important;
+    padding:42px 7px 12px !important;
+
+    gap:4px;
+    align-items:center;
+    justify-items:center;
+
+    border:1px solid var(--border) !important;
+    border-radius:12px;
+    background:#fff;
   }
 
-  .match-phase > div[style*="display:grid"] .team{
-        font-size:12px;
-  }
-
-  .match-phase > div[style*="display:grid"] .score{
-    font-size:19px;
-  }
-
+  /* Horário + quadra */
   .match-phase > div[style*="display:grid"] .match > .meta{
-    left:7px !important;
-    width:calc(100% - 14px) !important;
-    font-size:10px;
+    position:absolute !important;
+    top:12px !important;
+    left:6px !important;
+
+    width:calc(100% - 12px) !important;
+    margin:0 !important;
+
+    text-align:center !important;
+    font-size:9px !important;
+    line-height:1.2;
+    white-space:nowrap;
   }
 
+  /* Nomes das equipes */
+  .match-phase > div[style*="display:grid"] .team,
+  .match-phase > div[style*="display:grid"] .team.right{
+    width:100%;
+    min-width:0;
+
+    text-align:center !important;
+    font-size:11px !important;
+    line-height:1.15;
+    font-weight:900;
+
+    overflow-wrap:anywhere;
+  }
+
+  /* Placar / X */
+  .match-phase > div[style*="display:grid"] .score{
+    width:100%;
+    min-width:0;
+
+    text-align:center !important;
+    font-size:18px !important;
+    line-height:1.05;
+    font-weight:900;
+  }
+
+  /* Agendado / Finalizado */
   .match-phase > div[style*="display:grid"] .score .meta{
-    font-size:8px;
+    display:block;
+    width:max-content;
+    max-width:100%;
+
+    margin:7px auto 0 !important;
     padding:4px 5px;
+
+    text-align:center !important;
+    font-size:8px !important;
+    line-height:1;
+
+    border-radius:99px;
+    white-space:nowrap;
+  }
+
+  /* Placar dos sets */
+  .match-phase > div[style*="display:grid"] .set-detail{
+    margin:7px auto 0 !important;
+    text-align:center !important;
+    font-size:9px !important;
+    line-height:1.2;
+    white-space:normal;
   }
 }
                                                                                                                                  
