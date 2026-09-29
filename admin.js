@@ -780,7 +780,7 @@ function tieBreakOrder(a,b,ties){
 }
 
 function renderAdminStandings(){
-  const cat=$("autoCategory")?.value||"fem";
+  const cat = document.getElementById("autoCategory").value;
 
   const blocks=["A","B"].map(g=>{
     const rows=buildStandings(cat,g);
