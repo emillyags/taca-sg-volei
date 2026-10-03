@@ -1269,8 +1269,9 @@ document.addEventListener(
     $("generateSemisBtn").onclick=generateSemis;
     $("generateFinalBtn").onclick=generateFinal;
 
-    $("matchCategory").onchange=
-      refreshTeamOptions;
+   $("matchCategory").addEventListener("change", () => {
+  refreshTeamOptions();
+});
 
    document.getElementById("autoCategory").addEventListener("change", function () {
   renderAdminStandings();
